@@ -19,25 +19,25 @@ using namespace std;
 
 template <typename T1, typename T2>
 void printMap(const map<T1, T2> &m) {
-	cout << "MAP: ";
+	cout << "\nMAP: ";
 	for (auto &it : m) {
-		cout << it.first << "-" << it.second << " ";
+		cout << it.first << "=" << it.second << " ";
 	}
 	cout << "\n------------\n";
 }
 
 template <typename T>
 void printStack(stack<T> s) {
-	cout << "STACK: TOP-> ";
+	cout << "\nSTACK: TOP-> ";
 	while (!s.empty()) {
-		cout << s.top() << " ";
+		cout << s.top() << " "; s.pop();
 	}
 	cout << "-------------\n";
 }
 
 template <typename T1, typename T2>
 void printStackOfPair(stack< pair<T1,T2> > s) {
-	cout << "STACK: TOP-> ";
+	cout << "\nSTACK: TOP-> ";
 	while (!s.empty()) {
 		auto [t1, t2] = s.top(); s.pop();
 		cout << t1 << "-" << t2 << " ";
