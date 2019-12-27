@@ -16,6 +16,7 @@
 #include <fstream>
 #include <memory>
 using namespace std;
+
 class MinStack {
 private:
 	std::stack<int> data;
@@ -23,10 +24,7 @@ private:
 	
 public:
 	/* initialize your data structure here. */
-	MinStack() {
-		data = stack<int>();
-		minData = stack<int>();
-	}
+	MinStack() { }
 	
 	void push(int x) {
 		if (minData.empty() || x <= minData.top()) {
@@ -38,12 +36,10 @@ public:
 	
 	void pop() {
 		if (data.top() == minData.top()) {
-			data.pop();
 			minData.pop();
 		}
-		else {
-			data.pop();
-		}
+
+		data.pop();
 	}
 	
 	int top() {

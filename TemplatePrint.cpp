@@ -45,6 +45,14 @@ void printStackOfPair(stack< pair<T1,T2> > s) {
 	cout << "->BOTTOM\n-------------\n";
 }
 
+template <typename T>
+void printVector(const vector<T> &v) {
+	cout << "\n-------------\nVECTOR: ";
+	for (auto &i : v) {
+		cout << i << " ";
+	}
+	cout << "\n-------------\n";
+}
 
 int main(int argc, char *argv[]) {
 	
