@@ -1,36 +1,20 @@
-//
-//  main.cpp
-//  226. Invert Binary Tree
-//
-//  Created by Guancheng Lai on 8/19/18.
-//  Copyright © 2018 Guancheng Lai. All rights reserved.
-//
-
-#include <iostream>
-
-struct TreeNode
-{
-    int val;
-    TreeNode *left;
-    TreeNode *right;
-    TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+ * };
+ */
+class Solution {
+public:
+	TreeNode* invertTree(TreeNode* root) {
+		if (root == nullptr) return nullptr;
+		
+		std::swap(root->left, root->right);
+		root->left = invertTree(root->left);
+		root->right = invertTree(root->right);
+		return root;
+	}
 };
-
-TreeNode* invertTree(TreeNode* root)
-{
-    if (root->left == nullptr && root->right == nullptr)
-    {
-        return nullptr;
-    }
-    else
-    {
-        
-    }
-    
-    return nullptr;
-}
-
-int main(int argc, const char * argv[])
-{
-    
-}
