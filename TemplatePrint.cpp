@@ -54,6 +54,15 @@ void printVector(const vector<T> &v) {
 	cout << "\n-------------\n";
 }
 
+template <typename T>
+void printList(const T& li) {
+	cout << "\n-------------\nLIST: ";
+	for (auto &i : li) {
+		cout << i << " ";
+	}
+	cout << "\n-------------\n";
+} 
+
 int main(int argc, char *argv[]) {
 	
 }
