@@ -19,12 +19,6 @@ using namespace std;
 
 class Solution {
 private:
-	void addToResult(vector<int> &result, int i, int j) {
-		for (; i <= j; i++) {
-			result.push_back(i);
-		}
-	}
-	
 	// template <typename T>
 	// void printVector(const vector<T> &v) {
 	//     cout << "\n-------------\nVECTOR: ";
@@ -36,28 +30,17 @@ private:
 
 public:
 	vector<int> findDisappearedNumbers(vector<int>& nums) {
-		if (nums.empty())
-		{
-			return nums;
+		vector<int> exist(nums.size() + 1, 0);
+		for (auto &i : nums) {
+			exist[i] = 1;
 		}
 		
-		std::sort(nums.begin(), nums.end());
 		vector<int> result;
-		int cur = 1;
-		for (int i = 0; i < nums.size(); ++i) {
-			if (nums[i] == cur) {
-				cur++;
-			}
-			else if (nums[i] > cur) {
-				addToResult(result, cur, nums[i] - 1);
-				cur = nums[i] + 1;
-				
+		for (int i = 1; i < exist.size(); ++i) {
+			if (exist[i] == 0) {
+				result.push_back(i);
 			}
 		}
-		
-		// printVector(result);
-		// cout << "Cur = " << cur << endl;
-		addToResult(result, cur, nums.size());
 		
 		return result;
 	}
