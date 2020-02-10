@@ -193,6 +193,40 @@ public:
         
         return result;
     }
+	
+	// Faster Approach
+	/*
+	class Solution {
+	public:
+		int countServers(vector<vector<int>>& grid) {
+			size_t m = grid.size();
+			size_t n = grid[0].size();
+			
+			vector<int> row(m,0);
+			vector<int> col(n,0);
+			
+			for (int r=0; r<m; r++) {
+				for (int c=0; c<n; c++) {
+					if (grid[r][c] == 1) {
+						row[r]++;
+						col[c]++;
+					}
+				}
+			}
+			
+			int result(0);
+			for (int r=0; r<m; r++) {
+				for (int c=0; c<n; c++) {
+					if (grid[r][c] == 1 && (row[r] > 1 || col[c] > 1)) {
+						result++;
+					}
+				}
+			}
+			
+			return result;
+		}
+	};
+	*/
 };
 
 
