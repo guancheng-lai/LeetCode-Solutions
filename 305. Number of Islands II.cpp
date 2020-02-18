@@ -17,112 +17,90 @@
 #include <memory>
 using namespace std;
 
-class UF
+class UF 
 {
 private:
-	int count;
-	vector<int> info;
-	vector<int> sz;
-
-public:
-	UF(int m, int n)
+	vector<int> _info;
+	vector<int> _size;
+	int _count;
+	
+public:	
+	UF(int m, int n) : _count(0) 
 	{
-		count = 0;
-		info = vector<int>(m * n);
-		sz = vector<int>(m * n);
-
-		for (int i = 0; i < m * n; ++i){
-			info[i] = -1;
-			sz[i] = 0;
-		}
-	}
-
-	int number() const
+		this->_info.resize(m * n);
+		for (int i = 0; i < m * n; ++i) this->_info[i] = i;
+		
+		this->_size.resize(m * n, 0);
+	} 
+	
+	int root(int p) 
 	{
-		return count;
+		while (_info[p] != p) p = _info[p];
+		
+		return _info[p];
 	}
-
-	int getSize(int i) const
+	
+	bool isConnected(int p, int q) 
 	{
-		return sz[root(i)];
+		return p == q || root(p) == root(q);
 	}
-
-	void setSize(int i, int newSize)
-	{
-		sz[root(i)] = newSize;
-	}
-
-	int root(int p) const
-	{
-		if (p >= info.size() || p < 0) return -1;
-
-		return info[p] != p ? root(info[p]) : info[p];
-	}
-
-	bool connected(int p, int q) const 
+	
+	void unite(int p, int q) 
 	{
 		int rp = root(p), rq = root(q);
-		return rp != -1 && rq != -1 && rp == rq;
-	}
-
-	void Union(int p, int q)
-	{
-		int rp = root(p);
-		int rq = root(q);
 		if (rp == rq) return;
-
-		if (rp == -1) 
+		if (_size[rp] != 0 && _size[rq] != 0) _count--;
+		
+		if (_size[rp] >= _size[rq]) 
 		{
-			info[p] = rq;
-			sz[rq]++;
-		}
-		else if (rq == -1)
-		{
-			info[q] = rp;
-			sz[rp]++;
+			_info[rq] = rp;
+			_size[rp] += _size[rq];
+			_size[rq] = 0;
 		}
 		else 
 		{
-			int pSize = getSize(rp);
-			int qSize = getSize(rq);
-			if (pSize > qSize) 
-			{
-				setSize(rq, 0);
-				info[rq] = rp;
-				setSize(rp, pSize + qSize);
-			}
-			else 
-			{
-				setSize(rp, 0);
-				info[rp] = rq;
-				setSize(rq, pSize + qSize);
-			}
-			
-			count--;
+			_info[rp] = rq;
+			_size[rq] += _size[rp];
+			_size[rp] = 0;
 		}
 	}
-
-	void UnionItself(int i)
+	
+	void uniteOne(int p) 
 	{
-		info[i] = i;
-		setSize(i, 1);
-		count++;
+		_size[p] = 1;
+		_count++;
+	}
+	
+	void print_info() const
+	{
+		cout << endl;
+		for (auto i : _info) cout << i << " ";	
+		cout << endl;
+	}
+	
+	void print_size() const
+	{
+		cout << endl;
+		for (auto i : _size) cout << i << " ";	
+		cout << endl;
+	}
+	
+	int number() const {
+		return this->_count;
 	}
 };
 
-class Solution 
-{
+class Solution {
 public:
-	vector<int> numIslands2(int m, int n, vector<vector<int>>& positions) 
-	{
-		if ((m == 0 && n == 0) || positions.empty()) return vector<int>();
+	vector<int> numIslands2(int m, int n, vector<vector<int>>& positions) {
+		if (m == 0 && n == 0) return vector<int>();
+		if (positions.empty()) return vector<int>();
 
 		vector<int> result(positions.size());
+
 		vector< vector<int> > grid(m, vector<int>(n, 0));
-		
 		UF uf(m, n);
-		
-		uf.UnionItself(positions[0][0] * n + positions[0][1]);
+		uf.uniteOne(positions[0][0] * n + positions[0][1]);
 		grid[positions[0][0]][positions[0][1]] = 1; 
 		result[0] = 1;
 
@@ -141,32 +119,32 @@ public:
 
 			if (r > 0 && grid[r-1][c] == 1) 
 			{
-				uf.Union(myID, myID - n);
+				uf.unite(myID, myID - n);
 				hasNeighbor = true;
 			}
 
 			if (c > 0 && grid[r][c-1] == 1) 
 			{
-				uf.Union(myID, myID - 1);
+				uf.unite(myID, myID - 1);
 				hasNeighbor = true;
 			}
 
 			if (r < m - 1 && grid[r+1][c] == 1) 
 			{
-				uf.Union(myID, myID + n);
+				uf.unite(myID, myID + n);
 				hasNeighbor = true;
 			}
 
 			if (c < n - 1 && grid[r][c+1] == 1) 
 			{
-				uf.Union(myID, myID + 1);
+				uf.unite(myID, myID + 1);
 				hasNeighbor = true;
 			}
 
 			if (!hasNeighbor) 
 			{
 				result[i] = result[i - 1] + 1;
-				uf.UnionItself(myID);
+				uf.uniteOne(myID);
 			}
 			else 
 			{
