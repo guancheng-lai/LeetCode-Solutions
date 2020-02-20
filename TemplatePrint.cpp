@@ -63,6 +63,18 @@ void printList(const T& li) {
 	cout << "\n-------------\n";
 } 
 
+template <typename T>
+void printMatrix(const vector< vector<T> > &mat) {
+	cout << "\n-------------\nMATRIX: ";
+	for (auto &v : mat) {
+		for (auto i : v) {
+			cout << i << " ";
+		}
+		cout << endl;
+	}
+	cout << "\n-------------\n";
+}
+
 int main(int argc, char *argv[]) {
 	
 }
