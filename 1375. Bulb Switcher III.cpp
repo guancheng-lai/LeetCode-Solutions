@@ -149,7 +149,8 @@ public:
 
 class Solution {
 public:
-    int numTimesAllBlue(vector<int>& light) {
+	// Union Find solution
+    int numTimesAllBlue1(vector<int>& light) {
         int n = light.size();
 		int result(0);
 		UF uf(n);
@@ -171,10 +172,24 @@ public:
 		
 		return result;
     }
+	
+	// Check missed number solution
+	int numTimesAllBlue2(vector<int>& light) {
+		int right = 0;
+		int result = 0;
+		for (int i = 0; i < light.size(); ++i) {
+			right = max(right, light[i]);
+			if (right == i+1) result++;
+		}
+			
+		return result;
+	}
 };
 
 int main(int argc, char *argv[]) {
 	Solution s;
 	vector<int> li{3,2,4,1,5};
-	cout << s.numTimesAllBlue(li);	
+	cout << s.numTimesAllBlue1(li) << endl;	
+	cout << s.numTimesAllBlue2(li) << endl;	
+
 }
