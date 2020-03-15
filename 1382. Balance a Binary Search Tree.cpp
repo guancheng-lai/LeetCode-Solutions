@@ -13,8 +13,9 @@ private:
 	
 	void getNodes(TreeNode * root) {
 		if (root == nullptr) return;
-		info.push_back(root->val);
+		
 		getNodes(root->left);
+		info.push_back(root->val);
 		getNodes(root->right);
 	}
 	
@@ -34,11 +35,7 @@ private:
 	
 public:
 	TreeNode* balanceBST(TreeNode* root) {
-		if (root == nullptr) return nullptr;
 		getNodes(root);
-		sort(info.begin(), info.end());
-		for (auto i : info) cout << i << " ";
-		TreeNode * result = construct(0,info.size()-1);
-		return result;
+		return construct(0,info.size()-1);
 	}
 };
