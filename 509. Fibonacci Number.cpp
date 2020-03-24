@@ -25,12 +25,14 @@ using namespace std;
 class Solution {
 public:
 	// Math Approach
+	// 4ms 8.4MB
 	// static constexpr double sqrt5 = 2.2360679775;
 	// int fib(int N) {
 	//     return (1.0 / sqrt5) * (pow(((1.0 + sqrt5) / 2.0), N) - pow(((1.0 - sqrt5) / 2.0), N));
 	// }
 	
 	// Recursive Approach
+	// 0ms 6.6MB
 	// unordered_map<int,int> memo;
 	// int fib(int N) {
 	//     if (N <= 1) return N;
@@ -41,6 +43,7 @@ public:
 	// }
 	
 	// Dynamic Programming Approach
+	// 0ms 6.1MB
 	int fib(int N) {
 		if (N <= 1) return N;
 		vector<int> dp(31,0); dp[1] = 1;
@@ -52,7 +55,6 @@ public:
 		return dp[N];
 	}
 };
-
 int main(int argc, char *argv[]) {
 	Solution s;
 	cout << s.fib(10);	
