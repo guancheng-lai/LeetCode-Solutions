@@ -65,14 +65,14 @@ void printList(const T& li) {
 
 template <typename T>
 void printMatrix(const vector< vector<T> > &mat) {
-	cout << "\n-------------\nMATRIX: ";
+	cout << "\n------MATRIX------\n";
 	for (auto &v : mat) {
 		for (auto i : v) {
 			cout << i << " ";
 		}
 		cout << endl;
 	}
-	cout << "\n-------------\n";
+	cout << "\n------------------\n";
 }
 
 int main(int argc, char *argv[]) {
