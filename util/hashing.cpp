@@ -46,5 +46,7 @@ namespace hashing {
 }
 
 int main(int argc, char *argv[]) {
-	
+	unordered_map< pair<int,int>, int, hashing::hash_pair > memo;
+	memo[{1,2}] = 3;
+	cout << memo[{1,2}] ;
 }
