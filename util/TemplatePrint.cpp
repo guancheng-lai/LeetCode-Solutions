@@ -72,7 +72,7 @@ void printMatrix(const vector< vector<T> > &mat) {
 		}
 		cout << endl;
 	}
-	cout << "\n------------------\n";
+	cout << "------------------\n";
 }
 
 int main(int argc, char *argv[]) {
