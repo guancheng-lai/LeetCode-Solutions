@@ -54,5 +54,12 @@ public:
 int main(int argc, char *argv[]) {
 	Solution s;
 	vector< string > vs {"eat","tea","tan","ate","nat","bat"};
-	s.groupAnagrams(vs);	
+	auto res = s.groupAnagrams(vs);
+	for (auto &v : res) {
+		cout << "[";
+		for (auto &s : v) {
+			cout << " " << s << " ";
+		}
+		cout << "]";
+	}
 }

@@ -42,7 +42,35 @@ namespace hashing {
 			auto hash3 = hash<T3>{}(get<2>(tp)); 
 			return hash1 ^ hash2 ^ hash3;
 		} 
-	};	
+	};
+	
+	struct hash_unordered_map {
+		template <class T1, class T2> 
+		size_t operator() (const unordered_map<T1, T2>& m) const 
+		{
+			size_t hash_result;
+			for (auto &[k,v] : m) {
+				auto hash_k = hash<T1>{}(k);
+				auto hash_v = hash<T1>{}(v);
+				hash_result = hash_result ^ hash_k ^ hash_v;
+			}
+			return hash_result;
+		}
+	};
+	
+	struct hash_tree_map {
+		template <class T1, class T2> 
+		size_t operator() (const map<T1, T2>& m) const 
+		{
+			size_t hash_result;
+			for (auto &[k,v] : m) {
+				auto hash_k = hash<T1>{}(k);
+				auto hash_v = hash<T1>{}(v);
+				hash_result = hash_result ^ hash_k ^ hash_v;
+			}
+			return hash_result;
+		}
+	};
 }
 
 int main(int argc, char *argv[]) {
