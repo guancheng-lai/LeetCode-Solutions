@@ -71,6 +71,18 @@ namespace hashing {
 			return hash_result;
 		}
 	};
+	
+	struct hash_vector {
+		template <class T> 
+		size_t operator() (const vector<T>& v) const 
+		{
+			size_t hash_result;
+			for (auto &i : v) {
+				hash_result = hash_result ^ hash<T>{}(i);
+			}
+			return hash_result;
+		}
+	};
 }
 
 int main(int argc, char *argv[]) {
