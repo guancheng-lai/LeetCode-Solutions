@@ -24,30 +24,36 @@ using namespace std;
 
 class Solution {
 public:
-	vector<int> productExceptSelf(vector<int>& nums)
-	{
-		int n = nums.size();
-		vector<int> res(n,1);
-		for (int i = 1; i < n; ++i) {
-			res[i] = res[i-1] * nums[i-1];
+	bool checkValidString(string s) {
+		int pmin = 0, pmax = 0;
+		for (auto &c : s) {
+			switch (c) {
+				case '(':
+					pmin++;
+					pmax++;
+					break;
+				case ')':
+					pmax--;
+					pmin--;
+					if (pmin < 0) pmin = 0;
+					break;
+				case '*':
+					pmax++;
+					pmin--;
+					if (pmin < 0) pmin = 0;
+					break;
+				default:
+					return false;
+			}
+			
+			if (pmax < 0) return false;
 		}
-		// for (auto i : res) cout << i << " ";
-		// cout << endl;
 		
-		int right = 1;
-		for (int i = n-1; i >= 0; i--) {
-			res[i] *= right;
-			right *= nums[i];
-			// cout << res[i] << " " << right << endl;
-		}
-		
-		return res;
+		return pmin == 0;
 	}
 };
 
 int main(int argc, char *argv[]) {
 	Solution s;
-	vector<int> A{1,2,3,4};
-	vector<int> res = s.productExceptSelf(A);
-	for (auto i : res) cout << i << " ";
+	assert(s.checkValidString("(*()"));
 }
