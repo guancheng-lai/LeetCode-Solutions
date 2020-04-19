@@ -2,6 +2,7 @@
 #include <math.h>
 #include <algorithm>
 #include <string>
+#include <string_view>
 #include <list>
 #include <vector>
 #include <set>
@@ -52,7 +53,7 @@ private:
 	
 	int searchForTarget(vector<int> &arr, int start, int end, int target) {
 		int result = -1;
-		while (start < end) {
+		while (start <= end) {
 			int mid = (start+end+1)/2;
 			if (arr[mid] == target) {
 				result = mid;
@@ -83,7 +84,7 @@ public:
 		if (target == nums[pivotIdx]) {
 			return pivotIdx;
 		}
-		
+		cout << pivotIdx << endl;
 		int result = -1;
 		if (target < nums[0]) {
 			result = searchForTarget(nums, pivotIdx, nums.size()-1, target);
@@ -98,20 +99,6 @@ public:
 
 int main(int argc, char *argv[]) {
 	Solution s;
-	int target = 3;
-	vector<int> v{ 3,1 };
-	cout << s.search(v, target);
-	
-//	int pivotIdx = s.searchForPivot(v);
-//	cout << "piovtIdx = " << pivotIdx << ", pivotValue = " << v[pivotIdx] << endl;
-//	if (target < v[0]) {
-//		int found = searchForTarget(v, pivotIdx, v.size()-1, target);
-//		cout << found << " " ;
-//		cout << (found == distance(v.begin(), find(v.begin(), v.end(), target)) ? "CORRECT" : "INCORRECT");
-//	}
-//	else {
-//		int found = searchForTarget(v, 0, pivotIdx, target);
-//		cout << found << " " ;
-//		cout << (found == distance(v.begin(), find(v.begin(), v.end(), target)) ? "CORRECT" : "INCORRECT");
-//	}
+	vector<int> arr{1,3};
+	cout << s.search(arr, 0);	
 }
