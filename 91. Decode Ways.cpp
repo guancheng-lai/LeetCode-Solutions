@@ -2,6 +2,7 @@
 #include <math.h>
 #include <algorithm>
 #include <string>
+#include <string_view>
 #include <list>
 #include <vector>
 #include <set>
@@ -13,51 +14,46 @@
 #include <limits>
 #include <thread>
 #include <mutex>
+#include <condition_variable>
+#include <future>
 #include <fstream>
 #include <memory>
+#include <limits>
+#include <numeric>
 using namespace std;
 
-int numDecodings(string s) {
-	if (s.size() == 0) return 0;			
-	if (s[0] == '0') return 0;
-	if (s.size() == 1) return 1;
-				
-	if (s.size() == 2) {
-		if (s == "00") { return 0; }
-		if (s == "01") { return 0; }				
-		if (s[0] == '0' || s[1] == '0') { return 1; }
-							
-		if (stoi(s) > 26) { return 1; }
-		else { return 2; }
-	}
-				
-	if (stoi( s.substr(0,2) ) > 26) {
-		int res = numDecodings(s.substr(2));
-		if (res == 0) { return 0;}
-																	
-		return 1 + res;
-	}
-	else {
-		if (s[0] == '0' && s[1] == '0' || s[1] == '0' && s[2] == '0') { return 0; }            
-						
-		if (s[0] == '0') { return numDecodings(s.substr(1)); }            
-						
-		if (s[1] == '0') { return numDecodings(s.substr(2)); }   
-						
-		int one = numDecodings(s.substr(1));
-		// if (one == 0) {
-		//     return 0;
-		// }
-						
-		int two = numDecodings(s.substr(2));                   
-		// if (two == 0) {
-		//     return 0;
-		// }
-
-		return one + two;
-	}
-}
+class Solution {
+private:
+	int N;
+	vector<int> memo;
+	
+	int dfs(const string &s, int i) {
+		if (i == N) return 1;
+		if (s[i] == '0') return 0;
 		
+		if (memo[i] != -1) return memo[i];
+		
+		int res = dfs(s,i+1);
+		if (i >= N-1) {
+			memo[i] = res;
+			return res;
+		}
+		
+		if (s[i] == '1' || (s[i] == '2' && s[i+1] <= '6') ) res += dfs(s,i+2);
+		memo[i] = res;
+		return res;
+	}
+	
+public:
+	int numDecodings(string s) {
+		this->N = s.size();
+		this->memo.resize(N,-1);
+		return N==0 ? 0 : dfs(s, 0);
+	}
+};
+
 int main(int argc, char *argv[]) {
-	cout << numDecodings("110");
+	Solution s;
+	cout << s.numDecodings("12");	
+	assert(s.numDecodings("12") == 2);
 }
