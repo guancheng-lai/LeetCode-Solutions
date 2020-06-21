@@ -27,7 +27,7 @@ struct Edge
 
 class UF
 {
-private:
+public:
 	int count;
 	vector<int> info;
 	vector<int> sz;
@@ -153,12 +153,22 @@ public:
 
 int main(int argc, char *argv[]) 
 {
-	UF uf(4);
+	UF uf(5);
 //	uf.uniteOne(2);
 	cout << uf.numberOfUnion();
 	uf.printUFInfo();
-	uf.unite(1, 2);
-//	uf.uniteOne(3);
+//	uf.unite(1, 2);
+	cout << endl;
+	uf.uniteOne(0);
 	cout << uf.numberOfUnion();
 	uf.printUFInfo();
+	
+	cout << endl;
+	uf.unite(0,1);
+	cout << uf.numberOfUnion();
+	uf.printUFInfo();
+	uf.printUFSize();
+	cout << uf.getSizeAt(1) << endl;;
+	
+	cout << uf.root(1) << " " << uf.root(0);
 }
