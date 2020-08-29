@@ -22,22 +22,24 @@
 #include <numeric>
 using namespace std;
 
-struct Vertex {
-	int left, right;
-	int sum = 0;
-	Vertex *left_child = nullptr, *right_child = nullptr;
-
-	Vertex(int lb, int rb) {
-		left = lb;
-		right = rb;
-	}
-
+class SegTree {
+private:
 	void extend() {
 		if (!left_child && left + 1 < right) {
 			int t = (left + right) / 2;
-			left_child = new Vertex(left, t);
-			right_child = new Vertex(t, right);
+			left_child = make_unique<SegTree>(left, t);
+			right_child = make_unique<SegTree>(t, right);
 		}
+	}
+
+public:
+	int left, right;
+	int sum = 0;
+	unique_ptr<SegTree> left_child, right_child;
+
+	SegTree(int lb, int rb) {
+		left = lb;
+		right = rb;
 	}
 
 	void add(int k, int x) {
@@ -54,7 +56,7 @@ struct Vertex {
 	int get_sum(int lq, int rq) {
 		if (lq <= left && right <= rq)
 			return sum;
-		if (max(left, lq) >= min(right, rq))
+		if (std::max(left, lq) >= std::min(right, rq))
 			return 0;
 		extend();
 		return left_child->get_sum(lq, rq) + right_child->get_sum(lq, rq);
@@ -62,13 +64,7 @@ struct Vertex {
 };
 
 int main(int argc, char *argv[]) {
-	vector<int> a{1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12}; 
-	Vertex v(0,10);
-	cout << v.get_sum(0,10);
-	v.add(0,1);
-	v.add(1,1);
-	cout << v.get_sum(0,2);
-	
-//	v.add(0,-1);
-//	cout << v.get_sum(0,1);
+	SegTree v(0, 10);
+	v.add(1, 1);
+	cout << v.get_sum(1, 2);
 }
