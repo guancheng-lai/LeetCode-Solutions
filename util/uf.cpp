@@ -25,89 +25,64 @@ struct Edge
 	}
 };
 
-class UF
-{
+class UF {
 public:
 	int count;
 	vector<int> info;
 	vector<int> sz;
 
 public:
-	UF(int len)
-	{
+	UF(int len) {
 		count = 0;
 		info = vector<int>(len);
 		sz = vector<int>(len);
 
-		for (int i = 0; i < len; ++i){
+		for (int i = 0; i < len; ++i) {
 			info[i] = -1;
 			sz[i] = 0;
 		}
 	}
 
-	int numberOfUnion() const
-	{
-		return count;
-	}
+	int numberOfUnion() const { return count; }
 
-	int getSizeAt(int i) const
-	{
-		return sz[root(i)];
-	}
+	int getSizeAt(int i) const { return sz[root(i)]; }
 
-	void setSizeAt(int i, int newSize)
-	{
-		sz[root(i)] = newSize;
-	}
+	void setSizeAt(int i, int newSize) { sz[root(i)] = newSize; }
 
-	int root(int p) const
-	{
+	int root(int p) const {
 		if (p >= info.size() || p < 0) return -1;
-
 		return info[p] != p ? root(info[p]) : info[p];
 	}
 
-	bool connected(int p, int q) const 
-	{
+	bool connected(int p, int q) const {
 		int rp = root(p), rq = root(q);
 		return rp != -1 && rq != -1 && rp == rq;
 	}
 
-	void unite(int p, int q)
-	{
+	void unite(int p, int q) {
 		int rp = root(p);
 		int rq = root(q);
 		if (rp == rq && rp != -1) return;
 
-        if (rp == rq && rp == -1)
-		{
+        if (rp == rq && rp == -1) {
 			info[q] = p;
 			info[p] = p;
 			sz[p] = 2;
             count++;
-		}
-		else if (rp == -1) 
-		{
+		} else if (rp == -1) {
 			info[p] = rq;
 			sz[rq]++;
-		}
-		else if (rq == -1)
-		{
+		} else if (rq == -1) {
 			info[q] = rp;
 			sz[rp]++;
-		}
-		else 
-		{
+		} else {
 			int pSize = getSizeAt(rp);
 			int qSize = getSizeAt(rq);
-			if (pSize > qSize) 
-			{
+			if (pSize > qSize) {
 				setSizeAt(rq, 0);
 				info[rq] = rp;
 				setSizeAt(rp, pSize + qSize);
-			}
-			else 
-			{
+			} else {
 				setSizeAt(rp, 0);
 				info[rp] = rq;
 				setSizeAt(rq, pSize + qSize);
@@ -117,8 +92,7 @@ public:
 		}
 	}
 
-	void uniteOne(int i)
-	{
+	void uniteOne(int i) {
 		info[i] = i;
 		setSizeAt(i, 1);
 		count++;
@@ -138,16 +112,6 @@ public:
             cout << i << " ";
         }
         cout << endl;
-    }
-    
-    vector<int> getUFInfo() const 
-	{
-        return info;
-    }
-    
-    vector<int> getUFSize() const 
-	{
-        return sz;
     }
 };
 
